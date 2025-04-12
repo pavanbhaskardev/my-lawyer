@@ -1,13 +1,16 @@
 {
   "private": true,
   "name": "@my-lawyer/monorepo",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "turbo dev",
-    "dev:example": "turbo dev --filter=\"{./apps/example}...\"",
+    "dev:mobile-app": "turbo dev --filter=\"./apps/mobile-app\"",
     "lint": "turbo lint",
     "test": "turbo test",
-    "build": "turbo build",
-    "build:example": "turbo build --filter=\"...{./apps/example}\""
+    "build": "turbo build"
   },
   "devDependencies": {
     "turbo": "^1.13.4",

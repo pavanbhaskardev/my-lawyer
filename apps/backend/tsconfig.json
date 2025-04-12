@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "esModuleInterop": true,
+    "strict": true,
     "baseUrl": "./",
     "paths": {
-      "@/api/*": ["./src/*"]
+      "@/backend/*": ["./src/*"]
     },
-    "typeRoots": ["./node_modules/@cloudflare"],
-    "types": ["workers-types/2023-07-01"]
+    "lib": ["ESNext"],
+    "types": ["@cloudflare/workers-types/2023-07-01"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx"
   }
 }
