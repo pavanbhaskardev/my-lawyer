@@ -4,14 +4,12 @@ import { hc } from 'hono/client'
 import { useQuery } from '@tanstack/react-query'
 
 const IndexPage = () => {
-  const client = hc<AppType>('http://192.168.1.100:8787/')
+  const client = hc<AppType>(process.env.EXPO_PUBLIC_API_URL!)
 
   const { isPending, data } = useQuery({
     queryKey: ['todos'],
     queryFn: async () => {
       const res = await client.index.$post({ json: { name: 'Sateesh Challa' } })
-
-      console.log({ res })
 
       if (res.ok) {
         const data = await res.json()
@@ -23,9 +21,9 @@ const IndexPage = () => {
   console.log({ isPending, data })
 
   return (
-    <View className="flex-1 items-center justify-center bg-black">
-      {isPending && <Text className="text-white">Loading...</Text>}
-      <Text className="text-4xl text-white">{`🔥Damn ${data?.message}!`}</Text>
+    <View className="flex-1 items-center justify-center bg-background">
+      {isPending && <Text className="text-text">Loading...</Text>}
+      <Text className="text-4xl text-primary">{`🔥Damn ${data?.message}!`}</Text>
     </View>
   )
 }
