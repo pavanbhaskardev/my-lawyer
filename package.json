@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "turbo dev",
     "dev:mobile-app": "turbo dev --filter=\"./apps/mobile-app\"",
+    "dev:backend": "turbo dev --filter=\"./apps/backend\"",
     "lint": "turbo lint",
     "test": "turbo test",
     "build": "turbo build"
