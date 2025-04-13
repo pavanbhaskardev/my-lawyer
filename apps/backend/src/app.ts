@@ -9,6 +9,8 @@ export type Env = {
   BETTER_AUTH_SECRET: string
   BETTER_AUTH_URL: string
   DATABASE_URI: string
+  GOOGLE_CLIENT_ID: string
+  GOOGLE_CLIENT_SECRET: string
 }
 
 const app = new Hono<{
@@ -27,7 +29,12 @@ const app = new Hono<{
     })
   )
   .use('*', async (c, next) => {
-    const betterAuth = auth({ mongodbURI: c.env.DATABASE_URI })
+    const betterAuth = auth({
+      mongodbURI: c.env.DATABASE_URI,
+      googleClientID: c.env.GOOGLE_CLIENT_ID,
+      googleClientSecret: c.env.GOOGLE_CLIENT_SECRET,
+    })
+
     const session = await betterAuth.api.getSession({
       headers: c.req.raw.headers,
     })
@@ -43,7 +50,11 @@ const app = new Hono<{
     return next()
   })
   .on(['POST', 'GET'], '/api/auth/**', (c) => {
-    const betterAuth = auth({ mongodbURI: c.env.DATABASE_URI })
+    const betterAuth = auth({
+      mongodbURI: c.env.DATABASE_URI,
+      googleClientID: c.env.GOOGLE_CLIENT_ID,
+      googleClientSecret: c.env.GOOGLE_CLIENT_SECRET,
+    })
     return betterAuth.handler(c.req.raw)
   })
   .post(

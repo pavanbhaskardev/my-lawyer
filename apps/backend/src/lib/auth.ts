@@ -5,7 +5,15 @@ import { openAPI } from 'better-auth/plugins'
 
 let cachedClient: MongoClient | null = null
 
-export const auth = ({ mongodbURI }: { mongodbURI: string }) => {
+export const auth = ({
+  mongodbURI,
+  googleClientID,
+  googleClientSecret,
+}: {
+  mongodbURI: string
+  googleClientID: string
+  googleClientSecret: string
+}) => {
   if (!cachedClient) {
     cachedClient = new MongoClient(mongodbURI)
   }
@@ -16,6 +24,12 @@ export const auth = ({ mongodbURI }: { mongodbURI: string }) => {
     database: mongodbAdapter(db),
     emailAndPassword: {
       enabled: true,
+    },
+    socialProviders: {
+      google: {
+        clientId: googleClientID,
+        clientSecret: googleClientSecret,
+      },
     },
     plugins: [openAPI()],
   })
