@@ -27,6 +27,8 @@ config.cacheStores = [
   }),
 ]
 
+config.resolver.unstable_enablePackageExports = true
+
 config.resolver.resolveRequest = (context, moduleName, platform) => {
   if (moduleName === 'hono/client') {
     return {

@@ -21,6 +21,7 @@ export const auth = ({
   const db = cachedClient.db()
 
   return betterAuth({
+    trustedOrigins: ['my-lawyer://', 'exp://'],
     database: mongodbAdapter(db),
     emailAndPassword: {
       enabled: true,
