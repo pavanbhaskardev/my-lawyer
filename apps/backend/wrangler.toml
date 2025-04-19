@@ -1,4 +1,4 @@
-name = "tasks-app"
+name = "my-lawyer"
 main = "src/app.ts"
 compatibility_date = "2024-12-05"
 compatibility_flags = [ "nodejs_compat" ]
