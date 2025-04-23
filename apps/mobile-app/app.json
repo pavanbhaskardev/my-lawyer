@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "my-lawyer",
-    "slug": "my-lawyer",
+    "name": "mylawyer",
+    "slug": "mylawyer",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "my-lawyer",
+    "scheme": "mylawyer",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

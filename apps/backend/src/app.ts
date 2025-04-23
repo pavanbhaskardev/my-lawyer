@@ -29,11 +29,7 @@ const app = new Hono<{
     })
   )
   .use('*', async (c, next) => {
-    const betterAuth = auth({
-      mongodbURI: c.env.DATABASE_URI,
-      googleClientID: c.env.GOOGLE_CLIENT_ID,
-      googleClientSecret: c.env.GOOGLE_CLIENT_SECRET,
-    })
+    const betterAuth = auth(c.env)
 
     const session = await betterAuth.api.getSession({
       headers: c.req.raw.headers,
@@ -49,12 +45,8 @@ const app = new Hono<{
     c.set('session', session.session)
     return next()
   })
-  .on(['POST', 'GET'], '/api/auth/**', (c) => {
-    const betterAuth = auth({
-      mongodbURI: c.env.DATABASE_URI,
-      googleClientID: c.env.GOOGLE_CLIENT_ID,
-      googleClientSecret: c.env.GOOGLE_CLIENT_SECRET,
-    })
+  .on(['POST', 'GET'], '/api/auth/*', (c) => {
+    const betterAuth = auth(c.env)
     return betterAuth.handler(c.req.raw)
   })
   .post(
