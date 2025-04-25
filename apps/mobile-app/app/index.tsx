@@ -19,8 +19,6 @@ const IndexPage = () => {
     },
   })
 
-  console.log({ isPending, data })
-
   const handleGoogleLogin = async () => {
     return await authClient.signIn.social({
       provider: 'google',

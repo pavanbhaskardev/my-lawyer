@@ -5,8 +5,6 @@ import { openAPI } from 'better-auth/plugins'
 import { expo } from '@better-auth/expo'
 import { Env } from '../app'
 
-let cachedClient: MongoClient | null = null
-
 export const auth = ({
   BETTER_AUTH_SECRET,
   BETTER_AUTH_URL,
@@ -14,11 +12,7 @@ export const auth = ({
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
 }: Env) => {
-  if (!cachedClient) {
-    cachedClient = new MongoClient(DATABASE_URI)
-  }
-
-  const db = cachedClient.db()
+  const db = new MongoClient(DATABASE_URI).db()
 
   return betterAuth({
     baseURL: BETTER_AUTH_URL,
