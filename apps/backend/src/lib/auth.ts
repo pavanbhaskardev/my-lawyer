@@ -1,7 +1,7 @@
 import { betterAuth } from 'better-auth'
 import { MongoClient } from 'mongodb'
 import { mongodbAdapter } from 'better-auth/adapters/mongodb'
-import { openAPI } from 'better-auth/plugins'
+import { openAPI, admin } from 'better-auth/plugins'
 import { expo } from '@better-auth/expo'
 import { Env } from '../app'
 
@@ -28,6 +28,6 @@ export const auth = ({
         clientSecret: GOOGLE_CLIENT_SECRET,
       },
     },
-    plugins: [openAPI(), expo()],
+    plugins: [openAPI(), expo(), admin()],
   })
 }

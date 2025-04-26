@@ -29,6 +29,7 @@ const IndexPage = () => {
   return (
     <View className="flex-1 items-center justify-center bg-background">
       {isPending && <Text className="text-text">Loading...</Text>}
+
       <Text className="text-4xl text-primary">{`🔥Damn ${data?.message}!`}</Text>
       <Button title="Sign-In with Google" onPress={handleGoogleLogin} />
     </View>
