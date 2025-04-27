@@ -4,6 +4,8 @@ import { mongodbAdapter } from 'better-auth/adapters/mongodb'
 import { openAPI, admin } from 'better-auth/plugins'
 import { expo } from '@better-auth/expo'
 import { Env } from '../app'
+import { admin as adminRole, lawyer, user } from '@/backend/lib/permissions'
+import { z } from 'zod'
 
 export const auth = ({
   BETTER_AUTH_SECRET,
@@ -28,6 +30,31 @@ export const auth = ({
         clientSecret: GOOGLE_CLIENT_SECRET,
       },
     },
-    plugins: [openAPI(), expo(), admin()],
+    user: {
+      additionalFields: {
+        phoneNumber: {
+          type: 'number',
+          required: false,
+          validator: {
+            input: z.number().min(10),
+          },
+        },
+        bio: {
+          type: 'string',
+          required: false,
+        },
+      },
+    },
+    plugins: [
+      openAPI(),
+      expo(),
+      admin({
+        roles: {
+          admin: adminRole,
+          lawyer,
+          user,
+        },
+      }),
+    ],
   })
 }
