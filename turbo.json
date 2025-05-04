@@ -10,14 +10,21 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [
-        "build/**",
-        "node_modules/.cache/metro/**"
-      ]
+      "outputs": ["build/**", "node_modules/.cache/metro/**"]
     },
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "db:generate": {
+      "cache": false
+    },
+    "db:migrate": {
+      "cache": false,
+      "persistent": true
+    },
+    "db:deploy": {
+      "cache": false
     }
   }
 }

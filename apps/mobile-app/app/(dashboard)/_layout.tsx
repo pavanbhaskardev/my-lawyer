@@ -1,7 +1,18 @@
+import { logo } from '@/constants/Images'
 import { authClient } from '@/lib/auth-client'
+import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs'
 import { Tabs } from 'expo-router'
 import { UsersRound } from 'lucide-react-native'
-import { View, Image } from 'react-native'
+import { View, Image, Text } from 'react-native'
+
+const Header = (props: BottomTabHeaderProps) => {
+  return (
+    <View className="bg-accent/10 h-16 items-center justify-center flex-row gap-2">
+      <Image source={logo} className="size-10" />
+      <Text className="text-xl font-bold">My Lawyer</Text>
+    </View>
+  )
+}
 
 export default function TabLayout() {
   const { data: session, isPending } = authClient.useSession()
@@ -20,7 +31,7 @@ export default function TabLayout() {
         options={{
           title: 'Lawyers',
           tabBarIcon: ({ color }) => <UsersRound color={color} size={24} />,
-          headerShown: false,
+          header: Header,
         }}
       />
 
@@ -39,7 +50,7 @@ export default function TabLayout() {
               />
             )
           },
-          headerShown: false,
+          header: Header,
         }}
       />
     </Tabs>

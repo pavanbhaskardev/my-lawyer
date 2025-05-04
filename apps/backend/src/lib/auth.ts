@@ -39,10 +39,6 @@ export const auth = ({
             input: z.number().min(10),
           },
         },
-        bio: {
-          type: 'string',
-          required: false,
-        },
       },
     },
     plugins: [

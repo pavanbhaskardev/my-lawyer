@@ -45,6 +45,7 @@ interface ButtonProps
   className?: string
   prefixLogo?: JSX.Element
   suffixLogo?: JSX.Element
+  showText?: boolean
 }
 
 export const Button = ({
@@ -54,6 +55,7 @@ export const Button = ({
   className = '',
   prefixLogo,
   suffixLogo,
+  showText = true,
   ...props
 }: ButtonProps) => {
   return (
@@ -62,7 +64,9 @@ export const Button = ({
       {...props}
     >
       {prefixLogo}
-      <Text className={cn(buttonTextVariants({ variant }))}>{title}</Text>
+      {showText && (
+        <Text className={cn(buttonTextVariants({ variant }))}>{title}</Text>
+      )}
       {suffixLogo}
     </TouchableOpacity>
   )
