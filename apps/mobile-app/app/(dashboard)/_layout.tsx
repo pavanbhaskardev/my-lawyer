@@ -2,7 +2,7 @@ import { logo } from '@/constants/Images'
 import { authClient } from '@/lib/auth-client'
 import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs'
 import { Tabs } from 'expo-router'
-import { UsersRound } from 'lucide-react-native'
+import { UserRoundCog, UsersRound } from 'lucide-react-native'
 import { View, Image, Text } from 'react-native'
 
 const Header = (props: BottomTabHeaderProps) => {
@@ -27,10 +27,18 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="lawyers"
+        name="lawyers/index"
         options={{
           title: 'Lawyers',
           tabBarIcon: ({ color }) => <UsersRound color={color} size={24} />,
+          header: Header,
+        }}
+      />
+
+      <Tabs.Screen
+        name="lawyers/[id]"
+        options={{
+          href: null,
           header: Header,
         }}
       />
@@ -51,6 +59,16 @@ export default function TabLayout() {
             )
           },
           header: Header,
+        }}
+      />
+
+      <Tabs.Screen
+        name="admin"
+        options={{
+          title: 'Admin',
+          tabBarIcon: ({ color }) => <UserRoundCog color={color} size={24} />,
+          header: Header,
+          href: session?.user?.role === 'admin' ? '/(dashboard)/admin' : null,
         }}
       />
     </Tabs>

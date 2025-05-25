@@ -36,7 +36,6 @@ export const auth = betterAuth({
   },
   plugins: [
     openAPI(),
-    expo() as any,
     admin({
       roles: {
         admin: adminRole,
@@ -44,5 +43,6 @@ export const auth = betterAuth({
         user,
       },
     }),
+    expo(),
   ],
 })

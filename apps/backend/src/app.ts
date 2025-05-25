@@ -8,8 +8,8 @@ import { z } from 'zod'
 
 const app = new Hono<{
   Variables: {
-    user: Record<string, unknown> | null
-    session: Record<string, unknown> | null
+    user: typeof auth.$Infer.Session.user | null
+    session: typeof auth.$Infer.Session.session | null
   }
 }>()
   .use('*', logger())
@@ -40,6 +40,17 @@ const app = new Hono<{
   .on(['POST', 'GET'], '/api/auth/*', (c) => {
     const betterAuth = auth
     return betterAuth.handler(c.req.raw)
+  })
+  .basePath('/api/v1')
+  .use('*', async (c, next) => {
+    const user = c.get('user')
+    const session = c.get('session')
+
+    if (!user || !session) {
+      return c.json({ message: 'Unauthenticated' }, { status: 401 })
+    }
+
+    return next()
   })
   .post(
     '/',
@@ -78,6 +89,7 @@ process.on('SIGINT', () => {
   server.close()
   process.exit(0)
 })
+
 process.on('SIGTERM', () => {
   server.close((err) => {
     if (err) {
