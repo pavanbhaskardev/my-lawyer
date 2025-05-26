@@ -7,7 +7,7 @@ import { View, Image, Text } from 'react-native'
 
 const Header = (props: BottomTabHeaderProps) => {
   return (
-    <View className="bg-accent/10 h-16 items-center justify-center flex-row gap-2">
+    <View className="bg-accent/10 h-16 items-center justify-start px-4 flex-row gap-2">
       <Image source={logo} className="size-10" />
       <Text className="text-xl font-bold">My Lawyer</Text>
     </View>

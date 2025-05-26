@@ -1,6 +1,9 @@
-import { View, Text, Button } from 'react-native'
+import { View, Text, Image } from 'react-native'
 import React from 'react'
 import { authClient } from '@/lib/auth-client'
+import { Button } from '@/components/ui/button'
+import { LogOut, Scale } from 'lucide-react-native'
+import { Colors } from '@/constants/Colors'
 
 const Profile = () => {
   const { data: session } = authClient.useSession()
@@ -9,18 +12,42 @@ const Profile = () => {
     return await authClient.signOut()
   }
 
-  return (
-    <View className="flex-1 items-center justify-center bg-background">
-      <Text className="text-4xl text-primary">
-        {`User: ${JSON.stringify(session?.user)}`}
-      </Text>
+  const userDetails = {
+    name: session?.user?.name ?? '',
+    image: session?.user?.image ?? '',
+    joinedData: session?.user?.createdAt ?? '',
+  }
 
-      <Button
-        title="Log out"
-        onPress={() => {
-          handleLogout()
-        }}
-      />
+  return (
+    <View className="flex-1 items-center justify-start py-4 gap-8 bg-background">
+      <View className="items-center">
+        <Image
+          src={userDetails.image ?? ''}
+          alt="user-profile"
+          className="size-24 rounded-full mb-3"
+        />
+
+        <Text className="text-2xl font-bold">{userDetails.name}</Text>
+        <Text className="text-slate-500">{`Joined on ${userDetails.joinedData}`}</Text>
+      </View>
+
+      <View className="gap-4">
+        <Button
+          title="Apply for Lawyer"
+          size="lg"
+          prefixLogo={<Scale color={Colors.light.background} size={20} />}
+        />
+
+        <Button
+          variant="outline"
+          title="Logout"
+          size="lg"
+          prefixLogo={<LogOut color={Colors.light.primary} size={20} />}
+          onPress={() => {
+            handleLogout()
+          }}
+        />
+      </View>
     </View>
   )
 }

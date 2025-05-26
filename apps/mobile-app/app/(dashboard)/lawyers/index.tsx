@@ -16,7 +16,10 @@ const Lawyers = () => {
     <View className="flex-1 bg-background">
       <ScrollView className="flex-1 py-4 px-4">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-          <View className="border mb-6 rounded-md px-2 py-2.5" key={item}>
+          <View
+            className="border border-accent mb-6 rounded-md px-2 py-2.5"
+            key={item}
+          >
             <Link href={'/(dashboard)/lawyers/sujith-addaniki'}>
               <View className="flex-1 flex-row gap-2">
                 <Image

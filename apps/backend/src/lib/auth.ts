@@ -42,6 +42,7 @@ export const auth = betterAuth({
         lawyer,
         user,
       },
+      defaultRole: 'user',
     }),
     expo(),
   ],
