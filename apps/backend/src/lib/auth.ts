@@ -5,7 +5,9 @@ import { admin as adminRole, lawyer, user } from './permissions.js'
 import { z } from 'zod'
 import { db } from './db.js'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
-import 'dotenv/config'
+import { config } from 'dotenv'
+
+config()
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL,
