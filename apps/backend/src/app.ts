@@ -1,6 +1,5 @@
 import { Hono } from 'hono'
 import { logger } from 'hono/logger'
-import { serve } from '@hono/node-server'
 import { cors } from 'hono/cors'
 import { auth } from './lib/auth.js'
 import { zValidator } from '@hono/zod-validator'
@@ -74,31 +73,36 @@ const app = new Hono<{
     }
   )
 
-const server = serve(
-  {
-    fetch: app.fetch,
-    port: 8787,
-  },
-  (info) => {
-    console.log(`Server is running on http://localhost:${info.port}`)
-  }
-)
+// Local development server (only runs when not in production/Vercel)
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+  const { serve } = await import('@hono/node-server')
 
-// graceful shutdown
-process.on('SIGINT', () => {
-  server.close()
-  process.exit(0)
-})
-
-process.on('SIGTERM', () => {
-  server.close((err) => {
-    if (err) {
-      console.error(err)
-      process.exit(1)
+  const server = serve(
+    {
+      fetch: app.fetch,
+      port: 8787,
+    },
+    (info) => {
+      console.log(`Server is running on http://localhost:${info.port}`)
     }
+  )
+
+  // graceful shutdown
+  process.on('SIGINT', () => {
+    server.close()
     process.exit(0)
   })
-})
+
+  process.on('SIGTERM', () => {
+    server.close((err) => {
+      if (err) {
+        console.error(err)
+        process.exit(1)
+      }
+      process.exit(0)
+    })
+  })
+}
 
 export default app
 export type AppType = typeof app
