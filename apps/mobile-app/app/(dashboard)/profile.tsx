@@ -4,6 +4,7 @@ import { authClient } from '@/lib/auth-client'
 import { Button } from '@/components/ui/button'
 import { LogOut, Scale } from 'lucide-react-native'
 import { Colors } from '@/constants/Colors'
+import { Link } from 'expo-router'
 
 const Profile = () => {
   const { data: session } = authClient.useSession()
@@ -32,11 +33,13 @@ const Profile = () => {
       </View>
 
       <View className="gap-4">
-        <Button
-          title="Apply for Lawyer"
-          size="lg"
-          prefixLogo={<Scale color={Colors.light.background} size={20} />}
-        />
+        <Link href="/apply-for-lawyer" asChild push>
+          <Button
+            title="Apply for Lawyer"
+            size="lg"
+            prefixLogo={<Scale color={Colors.light.background} size={20} />}
+          />
+        </Link>
 
         <Button
           variant="outline"

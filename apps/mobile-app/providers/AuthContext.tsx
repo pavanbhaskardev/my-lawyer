@@ -7,10 +7,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
 
   useEffect(() => {
-    if (data?.user) {
-      router.replace('/lawyers')
-    } else {
-      router.replace('/sign-in')
+    if (!isPending) {
+      if (data?.user) {
+        router.replace('/lawyers')
+      } else {
+        router.replace('/sign-in')
+      }
     }
   }, [data, isPending])
 

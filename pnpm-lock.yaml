@@ -159,6 +159,9 @@ importers:
       react-native-svg:
         specifier: ^15.11.2
         version: 15.11.2(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0))(react@19.0.0)
+      react-native-tab-view:
+        specifier: ^4.1.1
+        version: 4.1.1(react-native-pager-view@6.8.1(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0))(react@19.0.0))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0))(react@19.0.0)
       react-native-web:
         specifier: ~0.20.0
         version: 0.20.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -4223,6 +4226,12 @@ packages:
       react: '*'
       react-native: '*'
 
+  react-native-pager-view@6.8.1:
+    resolution: {integrity: sha512-XIyVEMhwq7sZqM7GobOJZXxFCfdFgVNq/CFB2rZIRNRSVPJqE1k1fsc8xfQKfdzsp6Rpt6I7VOIvhmP7/YHdVg==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+
   react-native-reanimated@3.17.4:
     resolution: {integrity: sha512-vmkG/N5KZrexHr4v0rZB7ohPVseGVNaCXjGxoRo+NYKgC9+mIZAkg/QIfy9xxfJ73FfTrryO9iYUrxks3ZfKbA==}
     peerDependencies:
@@ -4247,6 +4256,13 @@ packages:
     peerDependencies:
       react: '*'
       react-native: '*'
+
+  react-native-tab-view@4.1.1:
+    resolution: {integrity: sha512-+OSjPCGgmzkgpyyX15M5FkV0XO8ZfWmdfDt11l5f2prWRAUBcj+9fTr5Pd0B3M6F43Kf4wMdohaRBjb8qDfC4w==}
+    peerDependencies:
+      react: '>= 18.2.0'
+      react-native: '*'
+      react-native-pager-view: '>= 6.0.0'
 
   react-native-web@0.20.0:
     resolution: {integrity: sha512-OOSgrw+aON6R3hRosCau/xVxdLzbjEcsLysYedka0ZON4ZZe6n9xgeN9ZkoejhARM36oTlUgHIQqxGutEJ9Wxg==}
@@ -9756,6 +9772,11 @@ snapshots:
       react: 19.0.0
       react-native: 0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0)
 
+  react-native-pager-view@6.8.1(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0))(react@19.0.0):
+    dependencies:
+      react: 19.0.0
+      react-native: 0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0)
+
   react-native-reanimated@3.17.4(@babel/core@7.27.1)(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0))(react@19.0.0):
     dependencies:
       '@babel/core': 7.27.1
@@ -9795,6 +9816,13 @@ snapshots:
       react: 19.0.0
       react-native: 0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0)
       warn-once: 0.1.1
+
+  react-native-tab-view@4.1.1(react-native-pager-view@6.8.1(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0))(react@19.0.0))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0))(react@19.0.0):
+    dependencies:
+      react: 19.0.0
+      react-native: 0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0)
+      react-native-pager-view: 6.8.1(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0))(react@19.0.0)
+      use-latest-callback: 0.2.3(react@19.0.0)
 
   react-native-web@0.20.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:

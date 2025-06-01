@@ -8,6 +8,13 @@
       "when": 1748180290096,
       "tag": "0000_stormy_toad",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1748756151837,
+      "tag": "0001_silly_starfox",
+      "breakpoints": true
     }
   ]
 }

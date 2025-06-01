@@ -3,13 +3,23 @@ import { authClient } from '@/lib/auth-client'
 import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs'
 import { Tabs } from 'expo-router'
 import { UserRoundCog, UsersRound } from 'lucide-react-native'
-import { View, Image, Text } from 'react-native'
+import { View, Image, Text, TouchableOpacity } from 'react-native'
+import { useRouter } from 'expo-router'
 
 const Header = (props: BottomTabHeaderProps) => {
+  const router = useRouter()
+
   return (
-    <View className="bg-accent/10 h-16 items-center justify-start px-4 flex-row gap-2">
-      <Image source={logo} className="size-10" />
-      <Text className="text-xl font-bold">My Lawyer</Text>
+    <View className="h-16 bg-slate-100 items-center justify-start px-4 flex-row gap-2">
+      <TouchableOpacity
+        onPress={() => {
+          router.push('/lawyers')
+        }}
+        className="flex-row items-center gap-2"
+      >
+        <Image source={logo} className="size-10" />
+        <Text className="text-xl font-bold">My Lawyer</Text>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -69,6 +79,14 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <UserRoundCog color={color} size={24} />,
           header: Header,
           href: session?.user?.role === 'admin' ? '/(dashboard)/admin' : null,
+        }}
+      />
+
+      <Tabs.Screen
+        name="apply-for-lawyer"
+        options={{
+          href: null,
+          header: Header,
         }}
       />
     </Tabs>
