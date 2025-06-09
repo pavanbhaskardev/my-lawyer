@@ -17,50 +17,18 @@ const app = new Hono<{
   }
 }>()
   .use('*', logger())
-  .basePath('/api')
   .use(
-    '*', // Apply CORS to all routes instead of just /auth/*
+    '*',
     cors({
-      origin: process.env.BETTER_AUTH_URL!,
-      allowHeaders: ['Content-Type', 'Authorization', 'Cookie'], // Add Cookie header
+      origin: '*',
+      allowHeaders: ['Content-Type', 'Authorization', 'Cookie'],
       allowMethods: ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE'],
-      exposeHeaders: ['Content-Length', 'Set-Cookie'], // Expose Set-Cookie header
+      exposeHeaders: ['Content-Length', 'Set-Cookie'],
       maxAge: 600,
       credentials: true,
     })
   )
-  .use('*', async (c, next) => {
-    try {
-      // Log the incoming headers for debugging
-      console.log(
-        'Request headers:',
-        Object.fromEntries(c.req.raw.headers.entries())
-      )
-
-      const session = await auth.api.getSession({
-        headers: c.req.raw.headers,
-      })
-
-      console.dir({ session }, { depth: Infinity })
-
-      if (!session) {
-        console.log('No session found')
-        c.set('user', null)
-        c.set('session', null)
-        return next()
-      }
-
-      console.log('Session found:', session)
-      c.set('user', session.user)
-      c.set('session', session.session)
-      return next()
-    } catch (error) {
-      console.error('Error in session middleware:', error)
-      c.set('user', null)
-      c.set('session', null)
-      return next()
-    }
-  })
+  .basePath('/api')
   .on(['POST', 'GET'], '/auth/*', async (c) => {
     try {
       const response = await auth.handler(c.req.raw)
@@ -70,18 +38,38 @@ const app = new Hono<{
       return c.json({ error: 'Authentication error' }, 500)
     }
   })
-  .post(
-    '/create-tag',
-    async (c, next) => {
-      // Check if user is authenticated before processing
-      const user = c.get('user')
+  .use('*', async (c, next) => {
+    try {
+      const session = await auth.api.getSession({
+        headers: c.req.raw.headers,
+      })
 
-      if (!user) {
-        return c.json({ message: 'Authentication required' }, { status: 401 })
+      if (!session) {
+        c.set('user', null)
+        c.set('session', null)
+        return c.json(
+          {
+            error: 'Unauthenticated',
+          },
+          {
+            status: 401,
+          }
+        )
       }
 
+      c.set('user', session.user)
+      c.set('session', session.session)
+
       return next()
-    },
+    } catch (error) {
+      console.error('Error in session middleware:', error)
+      c.set('user', null)
+      c.set('session', null)
+      return next()
+    }
+  })
+  .post(
+    '/create-tag',
     zValidator(
       'json',
       z.object({

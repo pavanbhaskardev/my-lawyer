@@ -13,15 +13,17 @@ import { Colors } from '@/constants/Colors'
 import { honoClient } from '@/lib/hono-client'
 import { useMutation } from '@tanstack/react-query'
 
+import { authClient } from '@/lib/auth-client'
+
 const TagsTab = () => {
   const [tagName, setTagName] = useState('')
   const [tagDescription, setTagDescription] = useState('')
+  const cookies = authClient.getCookie()
+  const hcClient = honoClient({ cookies })
 
   const { mutate, isPending, error } = useMutation({
-    mutationFn: honoClient.api['create-tag'].$post,
+    mutationFn: hcClient.api['create-tag'].$post,
   })
-
-  console.log({ error, isPending })
 
   return (
     <ScrollView className="flex-1 p-4">
