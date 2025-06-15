@@ -4,6 +4,7 @@ import { expoClient } from '@better-auth/expo/client'
 import * as SecureStore from 'expo-secure-store'
 import { admin, lawyer, user, ac } from '@/backend/lib/permissions'
 import { inferAdditionalFields } from 'better-auth/client/plugins'
+import { auth } from '@/backend/lib/auth'
 
 export const authClient = createAuthClient({
   baseURL:
@@ -23,15 +24,6 @@ export const authClient = createAuthClient({
         user,
       },
     }),
-    inferAdditionalFields({
-      user: {
-        phoneNumber: {
-          type: 'number',
-        },
-        bio: {
-          type: 'string',
-        },
-      },
-    }),
+    inferAdditionalFields<typeof auth>(),
   ],
 })

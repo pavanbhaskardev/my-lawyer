@@ -15,6 +15,20 @@
       "when": 1749985841138,
       "tag": "0001_bouncy_squadron_supreme",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1749989238473,
+      "tag": "0002_dashing_fabian_cortez",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1749989965212,
+      "tag": "0003_calm_deathstrike",
+      "breakpoints": true
     }
   ]
 }

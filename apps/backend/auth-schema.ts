@@ -19,6 +19,12 @@ export const user = pgTable('user', {
   banReason: text('ban_reason'),
   banExpires: timestamp('ban_expires'),
   phoneNumber: integer('phone_number'),
+  lawyerVerified: timestamp('lawyer_verified'),
+  lawyerVerificationStatus: text('lawyer_verification_status').default(
+    'pending'
+  ),
+  rejectedReason: text('rejected_reason'),
+  bio: text('bio'),
 })
 
 export const session = pgTable('session', {

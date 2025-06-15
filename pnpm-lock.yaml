@@ -141,6 +141,9 @@ importers:
       react-native:
         specifier: 0.79.2
         version: 0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0)
+      react-native-element-dropdown:
+        specifier: ^2.12.4
+        version: 2.12.4(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0))(react@19.0.0)
       react-native-gesture-handler:
         specifier: ~2.24.0
         version: 2.24.0(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0))(react@19.0.0)
@@ -4190,6 +4193,13 @@ packages:
       react: '*'
       react-native: '*'
 
+  react-native-element-dropdown@2.12.4:
+    resolution: {integrity: sha512-abZc5SVji9FIt7fjojRYrbuvp03CoeZJrgvezQoDoSOrpiTqkX69ix5m+j06W2AVncA0VWvbT+vCMam8SoVadw==}
+    engines: {node: '>= 16.0.0'}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+
   react-native-gesture-handler@2.24.0:
     resolution: {integrity: sha512-ZdWyOd1C8axKJHIfYxjJKCcxjWEpUtUWgTOVY2wynbiveSQDm8X/PDyAKXSer/GOtIpjudUbACOndZXCN3vHsw==}
     peerDependencies:
@@ -6893,7 +6903,7 @@ snapshots:
 
   '@types/ws@8.18.1':
     dependencies:
-      '@types/node': 22.15.21
+      '@types/node': 22.15.31
     optional: true
 
   '@types/yargs-parser@21.0.3': {}
@@ -8790,7 +8800,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 22.15.21
+      '@types/node': 22.15.31
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -9722,6 +9732,12 @@ snapshots:
 
   react-native-edge-to-edge@1.6.0(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0))(react@19.0.0):
     dependencies:
+      react: 19.0.0
+      react-native: 0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0)
+
+  react-native-element-dropdown@2.12.4(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0))(react@19.0.0):
+    dependencies:
+      lodash: 4.17.21
       react: 19.0.0
       react-native: 0.79.2(@babel/core@7.27.1)(@types/react@19.0.10)(react@19.0.0)
 

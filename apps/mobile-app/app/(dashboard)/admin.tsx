@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Plus } from 'lucide-react-native'
+import { Plus, Scale } from 'lucide-react-native'
 import { Colors } from '@/constants/Colors'
 import { honoClient } from '@/lib/hono-client'
 import { useMutation } from '@tanstack/react-query'
@@ -18,11 +18,16 @@ import { authClient } from '@/lib/auth-client'
 const TagsTab = () => {
   const [tagName, setTagName] = useState('')
   const [tagDescription, setTagDescription] = useState('')
+
   const cookies = authClient.getCookie()
   const hcClient = honoClient({ cookies })
 
-  const { mutate, isPending, error } = useMutation({
-    mutationFn: hcClient.api['create-tag'].$post,
+  const { mutate, isPending } = useMutation({
+    mutationFn: hcClient.api['create-specialization'].$post,
+    onSuccess: () => {
+      setTagName('')
+      setTagDescription('')
+    },
   })
 
   return (
