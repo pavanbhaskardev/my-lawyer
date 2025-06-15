@@ -4,16 +4,16 @@
   "entries": [
     {
       "idx": 0,
-      "version": "6",
-      "when": 1748180290096,
-      "tag": "0000_stormy_toad",
+      "version": "7",
+      "when": 1749973858100,
+      "tag": "0000_messy_medusa",
       "breakpoints": true
     },
     {
       "idx": 1,
-      "version": "6",
-      "when": 1748756151837,
-      "tag": "0001_silly_starfox",
+      "version": "7",
+      "when": 1749985841138,
+      "tag": "0001_bouncy_squadron_supreme",
       "breakpoints": true
     }
   ]

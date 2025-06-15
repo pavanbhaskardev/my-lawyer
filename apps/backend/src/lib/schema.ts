@@ -1,48 +1,66 @@
 import { user, account, session, verification } from '@schema'
-import { sqliteTable, text, primaryKey } from 'drizzle-orm/sqlite-core'
 import { relations } from 'drizzle-orm'
 
-// --- Tags Table ---
-export const tags = sqliteTable('tags', {
+import { pgTable, text, timestamp, primaryKey } from 'drizzle-orm/pg-core'
+
+const specialization = pgTable('specialization', {
   id: text('id').primaryKey(),
-  name: text('name').notNull().unique(),
-  description: text('description'),
+  name: text('name').notNull(),
+  description: text('description').notNull(),
+  createdAt: timestamp('created_at')
+    .$defaultFn(() => /* @__PURE__ */ new Date())
+    .notNull(),
+  updatedAt: timestamp('updated_at')
+    .$defaultFn(() => /* @__PURE__ */ new Date())
+    .notNull(),
 })
 
-// --- User-To-Tags Join Table ---
-export const userToTags = sqliteTable(
-  'user_to_tags',
+// Junction table for many-to-many relationship
+const userSpecialization = pgTable(
+  'user_specialization',
   {
     userId: text('user_id')
       .notNull()
-      .references(() => user.id),
-    tagId: text('tag_id')
+      .references(() => user.id, { onDelete: 'cascade' }),
+    specializationId: text('specialization_id')
       .notNull()
-      .references(() => tags.id),
+      .references(() => specialization.id, { onDelete: 'cascade' }),
+    createdAt: timestamp('created_at')
+      .$defaultFn(() => new Date())
+      .notNull(),
   },
   (table) => ({
-    pk: primaryKey(table.userId, table.tagId),
+    // Composite primary key
+    pk: primaryKey({ columns: [table.userId, table.specializationId] }),
   })
 )
 
-// --- Relations ---
-export const tagsRelations = relations(tags, ({ many }) => ({
-  users: many(userToTags),
+// Relations - One-way: Users can have multiple specializations
+const userRelations = relations(user, ({ many }) => ({
+  userSpecializations: many(userSpecialization),
 }))
 
-export const userRelations = relations(user, ({ many }) => ({
-  tags: many(userToTags),
-}))
+const userSpecializationRelations = relations(
+  userSpecialization,
+  ({ one }) => ({
+    user: one(user, {
+      fields: [userSpecialization.userId],
+      references: [user.id],
+    }),
+    specialization: one(specialization, {
+      fields: [userSpecialization.specializationId],
+      references: [specialization.id],
+    }),
+  })
+)
 
-export const userToTagsRelations = relations(userToTags, ({ one }) => ({
-  user: one(user, {
-    fields: [userToTags.userId],
-    references: [user.id],
-  }),
-  tag: one(tags, {
-    fields: [userToTags.tagId],
-    references: [tags.id],
-  }),
-}))
-
-export { user, account, session, verification }
+export {
+  user,
+  account,
+  session,
+  verification,
+  specialization,
+  userRelations,
+  userSpecialization,
+  userSpecializationRelations,
+}

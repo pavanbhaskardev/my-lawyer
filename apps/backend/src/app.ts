@@ -5,8 +5,9 @@ import { auth } from './lib/auth.js'
 import { zValidator } from '@hono/zod-validator'
 import { z } from 'zod'
 import { db } from './lib/db.js'
-import { tags } from './lib/schema.js'
+
 import { config } from 'dotenv'
+import { specialization, userSpecialization } from './lib/schema.js'
 
 config()
 
@@ -69,7 +70,7 @@ const app = new Hono<{
     }
   })
   .post(
-    '/create-tag',
+    '/create-specialization',
     zValidator(
       'json',
       z.object({
@@ -80,46 +81,26 @@ const app = new Hono<{
     async (c) => {
       const { name, description = '' } = c.req.valid('json')
       const user = c.get('user')
-
       const id = crypto.randomUUID()
 
-      try {
-        const result = await db
-          .insert(tags)
-          .values({
-            name,
-            description,
-            id,
-            // You might want to add user_id here if your schema supports it
-            // user_id: user.id,
-          })
-          .execute()
+      const [newSpecialization] = await db
+        .insert(specialization)
+        .values({
+          id,
+          name,
+          description,
+        })
+        .returning()
 
-        if (result.lastInsertRowid) {
-          return c.json(
-            {
-              message: `Success`,
-              tag: { id, name, description },
-            },
-            {
-              status: 201,
-            }
-          )
-        }
+      const [relation] = await db
+        .insert(userSpecialization)
+        .values({
+          specializationId: newSpecialization.id,
+          userId: user?.id ?? '',
+        })
+        .returning()
 
-        return c.json({ message: 'Failed to create tag' }, { status: 500 })
-      } catch (error) {
-        const message = error instanceof Error ? error.message : 'Unknown error'
-        console.error('Database error:', error)
-        return c.json(
-          {
-            message: `Failed to create tag: ${message}`,
-          },
-          {
-            status: 500,
-          }
-        )
-      }
+      return c.json({ data: { newSpecialization, relation } }, { status: 201 })
     }
   )
 
