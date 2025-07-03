@@ -9,7 +9,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!isPending) {
       if (data?.user) {
-        router.replace('/lawyers')
+        router.replace('/home')
       } else {
         router.replace('/sign-in')
       }

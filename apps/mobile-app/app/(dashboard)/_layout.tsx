@@ -2,26 +2,34 @@ import { logo } from '@/constants/Images'
 import { authClient } from '@/lib/auth-client'
 import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs'
 import { Tabs } from 'expo-router'
-import { UserRoundCog, UsersRound } from 'lucide-react-native'
+import { Home, UserRoundCog, UsersRound } from 'lucide-react-native'
 import { View, Image, Text, TouchableOpacity } from 'react-native'
 import { useRouter } from 'expo-router'
 
-const Header = (props: BottomTabHeaderProps) => {
+interface TabHeaderProps extends BottomTabHeaderProps {
+  showHeader?: boolean
+}
+
+const Header = ({ showHeader = true, ...props }: TabHeaderProps) => {
   const router = useRouter()
 
-  return (
-    <View className="h-16 bg-slate-100 items-center justify-start px-4 flex-row gap-2">
-      <TouchableOpacity
-        onPress={() => {
-          router.push('/lawyers')
-        }}
-        className="flex-row items-center gap-2"
-      >
-        <Image source={logo} className="size-10" />
-        <Text className="text-xl font-bold">My Lawyer</Text>
-      </TouchableOpacity>
-    </View>
-  )
+  if (showHeader) {
+    return (
+      <View className="h-16 bg-slate-100 items-center justify-start px-4 flex-row gap-2">
+        <TouchableOpacity
+          onPress={() => {
+            router.push('/lawyers')
+          }}
+          className="flex-row items-center gap-2"
+        >
+          <Image source={logo} className="size-10" />
+          <Text className="text-xl font-bold">My Lawyer</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  } else {
+    return null
+  }
 }
 
 export default function TabLayout() {
@@ -36,6 +44,15 @@ export default function TabLayout() {
         },
       }}
     >
+      <Tabs.Screen
+        name="home/index"
+        options={{
+          title: 'Home',
+          tabBarIcon: ({ color }) => <Home color={color} size={24} />,
+          header: (props) => <Header {...props} showHeader={false} />,
+        }}
+      />
+
       <Tabs.Screen
         name="lawyers/index"
         options={{
